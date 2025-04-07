@@ -1,4 +1,5 @@
 using Microsoft.Data.SqlClient;
+using System.Threading;
 
 namespace StockSync
 {
@@ -31,31 +32,34 @@ namespace StockSync
             using (SqlConnection conn = DatabaseConnect.GetConnection())
             {
                 conn.Open();
-                string query = "SELECT Role FROM Users WHERE Username = @Username AND Password = @Password";
+                string query = "SELECT UserID, Role FROM Users WHERE Username = @Username AND Password = @Password";
 
                 using (SqlCommand cmd = new SqlCommand(query, conn))
                 {
                     cmd.Parameters.AddWithValue("@Username", username);
                     cmd.Parameters.AddWithValue("@Password", password);
 
-                    object result = cmd.ExecuteScalar();
+                    SqlDataReader reader = cmd.ExecuteReader();
 
-                    if (result != null) // If user exists
+                    if (reader.Read()) // If user exists
                     {
-                        string role = result?.ToString()!;
+                        int userID = Convert.ToInt32(reader["UserID"]);
+                        string role = reader["Role"].ToString();
 
                         if (role == "Admin")
                         {
-                            AdminDashboard adminDashboard = new AdminDashboard();
+                            Thread.Sleep(500);
+                            AdminDashboard adminDashboard = new AdminDashboard(userID); // Pass userID to AdminDashboard
                             adminDashboard.Show();
                             this.Hide();
                         }
                         else if (role == "Cashier")
                         {
-                            CashierDashboard cashierDashboard = new CashierDashboard();
+                            Thread.Sleep(500);
+                            CashierDashboard cashierDashboard = new CashierDashboard(userID); // Pass userID to CashierDashboard
                             cashierDashboard.Show();
                             this.Hide();
-                        } 
+                        }
                     }
                     else
                     {

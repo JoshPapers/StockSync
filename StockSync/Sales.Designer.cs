@@ -30,7 +30,6 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Sales));
             pnlHeader = new Panel();
-            btnSearchProduct = new Button();
             txtSearchProduct = new TextBox();
             label1 = new Label();
             lblStockAvailable = new Label();
@@ -43,7 +42,7 @@
             label6 = new Label();
             panel1 = new Panel();
             btnAddToCart = new Button();
-            dataGridView1 = new DataGridView();
+            dgvCart = new DataGridView();
             panel4 = new Panel();
             label9 = new Label();
             panel5 = new Panel();
@@ -57,7 +56,7 @@
             ((System.ComponentModel.ISupportInitialize)dgvProducts).BeginInit();
             ((System.ComponentModel.ISupportInitialize)numQuantity).BeginInit();
             panel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)dgvCart).BeginInit();
             panel4.SuspendLayout();
             panel5.SuspendLayout();
             SuspendLayout();
@@ -65,29 +64,19 @@
             // pnlHeader
             // 
             pnlHeader.BackColor = SystemColors.GradientInactiveCaption;
-            pnlHeader.Controls.Add(btnSearchProduct);
             pnlHeader.Controls.Add(txtSearchProduct);
             pnlHeader.Controls.Add(label1);
             pnlHeader.Dock = DockStyle.Top;
             pnlHeader.Location = new Point(0, 0);
             pnlHeader.Name = "pnlHeader";
-            pnlHeader.Size = new Size(1097, 90);
+            pnlHeader.Size = new Size(1232, 90);
             pnlHeader.TabIndex = 5;
-            // 
-            // btnSearchProduct
-            // 
-            btnSearchProduct.Location = new Point(425, 35);
-            btnSearchProduct.Name = "btnSearchProduct";
-            btnSearchProduct.Size = new Size(94, 29);
-            btnSearchProduct.TabIndex = 3;
-            btnSearchProduct.Text = "Search";
-            btnSearchProduct.UseVisualStyleBackColor = true;
             // 
             // txtSearchProduct
             // 
             txtSearchProduct.Location = new Point(151, 35);
             txtSearchProduct.Name = "txtSearchProduct";
-            txtSearchProduct.Size = new Size(268, 27);
+            txtSearchProduct.Size = new Size(368, 27);
             txtSearchProduct.TabIndex = 2;
             txtSearchProduct.TextChanged += txtSearchProduct_TextChanged;
             // 
@@ -106,7 +95,7 @@
             lblStockAvailable.AutoSize = true;
             lblStockAvailable.BackColor = SystemColors.Info;
             lblStockAvailable.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblStockAvailable.Location = new Point(143, 20);
+            lblStockAvailable.Location = new Point(174, 20);
             lblStockAvailable.Name = "lblStockAvailable";
             lblStockAvailable.Size = new Size(18, 20);
             lblStockAvailable.TabIndex = 1;
@@ -118,7 +107,7 @@
             dgvProducts.Location = new Point(34, 123);
             dgvProducts.Name = "dgvProducts";
             dgvProducts.RowHeadersWidth = 51;
-            dgvProducts.Size = new Size(485, 314);
+            dgvProducts.Size = new Size(618, 314);
             dgvProducts.TabIndex = 6;
             dgvProducts.CellClick += dgvProducts_CellClick;
             // 
@@ -135,7 +124,7 @@
             // 
             // numQuantity
             // 
-            numQuantity.Location = new Point(283, 18);
+            numQuantity.Location = new Point(361, 18);
             numQuantity.Name = "numQuantity";
             numQuantity.Size = new Size(150, 27);
             numQuantity.TabIndex = 7;
@@ -144,7 +133,7 @@
             // 
             label3.AutoSize = true;
             label3.BackColor = SystemColors.GradientInactiveCaption;
-            label3.Location = new Point(23, 20);
+            label3.Location = new Point(54, 20);
             label3.Name = "label3";
             label3.Size = new Size(114, 20);
             label3.TabIndex = 8;
@@ -154,7 +143,7 @@
             // 
             label4.AutoSize = true;
             label4.BackColor = SystemColors.GradientInactiveCaption;
-            label4.Location = new Point(23, 58);
+            label4.Location = new Point(54, 58);
             label4.Name = "label4";
             label4.Size = new Size(93, 20);
             label4.TabIndex = 9;
@@ -165,7 +154,7 @@
             lblSellingPrice.AutoSize = true;
             lblSellingPrice.BackColor = SystemColors.Info;
             lblSellingPrice.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblSellingPrice.Location = new Point(122, 58);
+            lblSellingPrice.Location = new Point(153, 58);
             lblSellingPrice.Name = "lblSellingPrice";
             lblSellingPrice.Size = new Size(18, 20);
             lblSellingPrice.TabIndex = 10;
@@ -175,7 +164,7 @@
             // 
             label6.AutoSize = true;
             label6.BackColor = SystemColors.GradientInactiveCaption;
-            label6.Location = new Point(209, 20);
+            label6.Location = new Point(287, 20);
             label6.Name = "label6";
             label6.Size = new Size(68, 20);
             label6.TabIndex = 11;
@@ -193,35 +182,36 @@
             panel1.Controls.Add(label4);
             panel1.Location = new Point(34, 472);
             panel1.Name = "panel1";
-            panel1.Size = new Size(485, 109);
+            panel1.Size = new Size(618, 109);
             panel1.TabIndex = 12;
             // 
             // btnAddToCart
             // 
-            btnAddToCart.Location = new Point(209, 58);
+            btnAddToCart.Location = new Point(287, 58);
             btnAddToCart.Name = "btnAddToCart";
             btnAddToCart.Size = new Size(224, 29);
             btnAddToCart.TabIndex = 12;
             btnAddToCart.Text = "Add to Cart";
             btnAddToCart.UseVisualStyleBackColor = true;
+            btnAddToCart.Click += btnAddToCart_Click;
             // 
-            // dataGridView1
+            // dgvCart
             // 
-            dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Location = new Point(40, 33);
-            dataGridView1.Name = "dataGridView1";
-            dataGridView1.RowHeadersWidth = 51;
-            dataGridView1.Size = new Size(462, 314);
-            dataGridView1.TabIndex = 13;
+            dgvCart.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgvCart.Location = new Point(40, 33);
+            dgvCart.Name = "dgvCart";
+            dgvCart.RowHeadersWidth = 51;
+            dgvCart.Size = new Size(462, 314);
+            dgvCart.TabIndex = 13;
             // 
             // panel4
             // 
             panel4.BackColor = SystemColors.ActiveCaption;
             panel4.Controls.Add(label9);
             panel4.Controls.Add(panel5);
-            panel4.Controls.Add(dataGridView1);
+            panel4.Controls.Add(dgvCart);
             panel4.Dock = DockStyle.Right;
-            panel4.Location = new Point(558, 90);
+            panel4.Location = new Point(693, 90);
             panel4.Name = "panel4";
             panel4.Size = new Size(539, 543);
             panel4.TabIndex = 14;
@@ -258,6 +248,7 @@
             removeButton.TabIndex = 16;
             removeButton.Text = "Remove";
             removeButton.UseVisualStyleBackColor = true;
+            removeButton.Click += removeButton_Click;
             // 
             // btnConfirmSale
             // 
@@ -267,6 +258,7 @@
             btnConfirmSale.TabIndex = 13;
             btnConfirmSale.Text = "Confirm";
             btnConfirmSale.UseVisualStyleBackColor = true;
+            btnConfirmSale.Click += btnConfirmSale_Click;
             // 
             // btnCancelSale
             // 
@@ -276,6 +268,7 @@
             btnCancelSale.TabIndex = 12;
             btnCancelSale.Text = "Cancel";
             btnCancelSale.UseVisualStyleBackColor = true;
+            btnCancelSale.Click += btnCancelSale_Click;
             // 
             // label5
             // 
@@ -313,7 +306,7 @@
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.Azure;
-            ClientSize = new Size(1097, 633);
+            ClientSize = new Size(1232, 633);
             Controls.Add(backbutton);
             Controls.Add(panel4);
             Controls.Add(panel1);
@@ -321,6 +314,8 @@
             Controls.Add(dgvProducts);
             Controls.Add(pnlHeader);
             Icon = (Icon)resources.GetObject("$this.Icon");
+            MaximumSize = new Size(1250, 680);
+            MinimumSize = new Size(1250, 680);
             Name = "Sales";
             Text = "Sales";
             Load += Sales_Load_1;
@@ -330,7 +325,7 @@
             ((System.ComponentModel.ISupportInitialize)numQuantity).EndInit();
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)dgvCart).EndInit();
             panel4.ResumeLayout(false);
             panel4.PerformLayout();
             panel5.ResumeLayout(false);
@@ -345,7 +340,6 @@
         private TextBox txtSearchProduct;
         private Label lblStockAvailable;
         private Label label1;
-        private Button btnSearchProduct;
         private DataGridView dgvProducts;
         private Label label2;
         private NumericUpDown numQuantity;
@@ -355,7 +349,7 @@
         private Label label6;
         private Panel panel1;
         private Button btnAddToCart;
-        private DataGridView dataGridView1;
+        private DataGridView dgvCart;
         private Panel panel4;
         private Panel panel5;
         private Button btnCancelSale;

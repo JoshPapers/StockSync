@@ -170,7 +170,8 @@ namespace StockSync
         private void btnBack_Click(object sender, EventArgs e)
         {
             this.Hide();
-            AdminDashboard adminDashboard = new AdminDashboard();
+            int userID = 123; // Get the actual user ID (can be retrieved from a session or logged-in context)
+            AdminDashboard adminDashboard = new AdminDashboard(userID); // Pass the userID here
             adminDashboard.Show();
         }
 

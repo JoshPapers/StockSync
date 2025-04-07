@@ -12,10 +12,12 @@ namespace StockSync
 {
     public partial class AdminDashboard : Form
     {
-        public AdminDashboard()
+        int currentUserID;
+        public AdminDashboard(int userID)
         {
             InitializeComponent();
             this.StartPosition = FormStartPosition.CenterScreen;
+            currentUserID = userID;
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -40,7 +42,8 @@ namespace StockSync
         private void btnSales_Click(object sender, EventArgs e)
         {
             this.Hide();
-            Sales salesForm = new Sales();
+            Thread.Sleep(500);
+            Sales salesForm = new Sales(currentUserID);
             salesForm.Show();
         }
     }

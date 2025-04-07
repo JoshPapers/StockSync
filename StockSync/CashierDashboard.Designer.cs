@@ -86,6 +86,7 @@
             btnSales.TabIndex = 7;
             btnSales.Text = "Sales";
             btnSales.UseVisualStyleBackColor = true;
+            btnSales.Click += btnSales_Click;
             // 
             // btnLogout
             // 
@@ -95,7 +96,7 @@
             btnLogout.TabIndex = 6;
             btnLogout.Text = "Log Out";
             btnLogout.UseVisualStyleBackColor = true;
-            btnLogout.Click += this.btnLogout_Click;
+            btnLogout.Click += btnLogout_Click;
             // 
             // CashierDashboard
             // 
@@ -110,6 +111,7 @@
             MinimumSize = new Size(1250, 680);
             Name = "CashierDashboard";
             Text = "Cashier";
+            Load += CashierDashboard_Load;
             pnlSidebar.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)picLogo).EndInit();
             ResumeLayout(false);
