@@ -5,11 +5,12 @@ namespace StockSync
 {
     public partial class Inventory : Form
     {
-
-        public Inventory()
+        private int currentUserID;
+        public Inventory(int userID)
         {
             InitializeComponent();
             this.StartPosition = FormStartPosition.CenterScreen;
+            currentUserID = userID;
 
         }
 
@@ -68,29 +69,11 @@ namespace StockSync
                         dgvInventory.DefaultCellStyle.SelectionBackColor = dgvInventory.DefaultCellStyle.BackColor;
                         dgvInventory.DefaultCellStyle.SelectionForeColor = dgvInventory.DefaultCellStyle.ForeColor;
 
+                        dgvInventory.Sorted -= dgvInventory_Sorted; // remove if already attached
+                        dgvInventory.Sorted += dgvInventory_Sorted;
+
                         // **Baguhin ang kulay ng mga product na may 0 stock**
-                        foreach (DataGridViewRow row in dgvInventory.Rows)
-                        {
-                            if (Convert.ToInt32(row.Cells["Stock"].Value) == 0)
-                            {
-                                row.DefaultCellStyle.BackColor = Color.DarkRed;
-                                row.DefaultCellStyle.ForeColor = Color.White;
-                            }
-                        }
-                        foreach (DataGridViewRow row in dgvInventory.Rows)
-                        {
-                            int stock = Convert.ToInt32(row.Cells["Stock"].Value);
-                            object expirationObj = row.Cells["ExpirationDate"].Value;
-
-                            // Check if the expiration date is not null and already expired
-                            bool isExpired = expirationObj != DBNull.Value && Convert.ToDateTime(expirationObj) < DateTime.Now;
-
-                            if (stock == 0 || isExpired)
-                            {
-                                row.DefaultCellStyle.BackColor = Color.DarkRed;
-                                row.DefaultCellStyle.ForeColor = Color.White;
-                            }
-                        }
+                        ColorRows();
                     }
                 }
             }
@@ -98,6 +81,35 @@ namespace StockSync
             {
                 MessageBox.Show("Error loading inventory: " + ex.Message, "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
+        }
+        private void ColorRows()
+        {
+            foreach (DataGridViewRow row in dgvInventory.Rows)
+            {
+                if (Convert.ToInt32(row.Cells["Stock"].Value) == 0)
+                {
+                    row.DefaultCellStyle.BackColor = Color.DarkRed;
+                    row.DefaultCellStyle.ForeColor = Color.White;
+                }
+            }
+            foreach (DataGridViewRow row in dgvInventory.Rows)
+            {
+                int stock = Convert.ToInt32(row.Cells["Stock"].Value);
+                object expirationObj = row.Cells["ExpirationDate"].Value;
+
+                // Check if the expiration date is not null and already expired
+                bool isExpired = expirationObj != DBNull.Value && Convert.ToDateTime(expirationObj) < DateTime.Now;
+
+                if (stock == 0 || isExpired)
+                {
+                    row.DefaultCellStyle.BackColor = Color.DarkRed;
+                    row.DefaultCellStyle.ForeColor = Color.White;
+                }
+            }
+        }
+        private void dgvInventory_Sorted(object sender, EventArgs e)
+        {
+            ColorRows(); // re-apply row colors after sorting
         }
 
         private void LoadProductNames()
@@ -170,8 +182,7 @@ namespace StockSync
         private void btnBack_Click(object sender, EventArgs e)
         {
             this.Hide();
-            int userID = 123; // Get the actual user ID (can be retrieved from a session or logged-in context)
-            AdminDashboard adminDashboard = new AdminDashboard(userID); // Pass the userID here
+            AdminDashboard adminDashboard = new AdminDashboard(currentUserID); // Pass the userID here
             adminDashboard.Show();
         }
 

@@ -36,24 +36,24 @@
             label3 = new Label();
             TotalStocks = new Label();
             label1 = new Label();
-            pnlSidebar = new Panel();
-            Archive = new Button();
-            cmbProductName = new ComboBox();
-            NoExp = new CheckBox();
-            btnCategory = new Button();
-            btnArchiveProduct = new Button();
-            btnUpdateProduct = new Button();
-            btnAddProduct = new Button();
-            dtpExpirationDate = new DateTimePicker();
-            lblExpiration = new Label();
-            txtStockQuantity = new TextBox();
-            lblStock = new Label();
-            txtSellingPrice = new TextBox();
-            lblPrice = new Label();
-            cmbCategory = new ComboBox();
-            lblCategory = new Label();
-            lblProductName = new Label();
             btnBack = new Button();
+            lblProductName = new Label();
+            lblCategory = new Label();
+            cmbCategory = new ComboBox();
+            lblPrice = new Label();
+            txtSellingPrice = new TextBox();
+            lblStock = new Label();
+            txtStockQuantity = new TextBox();
+            lblExpiration = new Label();
+            dtpExpirationDate = new DateTimePicker();
+            btnAddProduct = new Button();
+            btnUpdateProduct = new Button();
+            btnArchiveProduct = new Button();
+            btnCategory = new Button();
+            NoExp = new CheckBox();
+            cmbProductName = new ComboBox();
+            Archive = new Button();
+            pnlSidebar = new Panel();
             pnlMainContent.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvInventory).BeginInit();
             pnlHeader.SuspendLayout();
@@ -134,6 +134,161 @@
             label1.TabIndex = 0;
             label1.Text = "Total Stocks:";
             // 
+            // btnBack
+            // 
+            btnBack.Location = new Point(12, 564);
+            btnBack.Name = "btnBack";
+            btnBack.Size = new Size(64, 54);
+            btnBack.TabIndex = 6;
+            btnBack.Text = "Back";
+            btnBack.UseVisualStyleBackColor = true;
+            btnBack.Click += btnBack_Click;
+            // 
+            // lblProductName
+            // 
+            lblProductName.AutoSize = true;
+            lblProductName.Location = new Point(12, 9);
+            lblProductName.Name = "lblProductName";
+            lblProductName.Size = new Size(107, 20);
+            lblProductName.TabIndex = 0;
+            lblProductName.Text = "Product Name:\t";
+            // 
+            // lblCategory
+            // 
+            lblCategory.AutoSize = true;
+            lblCategory.Location = new Point(12, 62);
+            lblCategory.Name = "lblCategory";
+            lblCategory.Size = new Size(72, 20);
+            lblCategory.TabIndex = 7;
+            lblCategory.Text = "Category:\t";
+            // 
+            // cmbCategory
+            // 
+            cmbCategory.DropDownStyle = ComboBoxStyle.DropDownList;
+            cmbCategory.FormattingEnabled = true;
+            cmbCategory.Location = new Point(12, 85);
+            cmbCategory.Name = "cmbCategory";
+            cmbCategory.Size = new Size(196, 28);
+            cmbCategory.TabIndex = 1;
+            cmbCategory.SelectedIndexChanged += cmbCategory_SelectedIndexChanged;
+            // 
+            // lblPrice
+            // 
+            lblPrice.AutoSize = true;
+            lblPrice.Location = new Point(12, 116);
+            lblPrice.Name = "lblPrice";
+            lblPrice.Size = new Size(93, 20);
+            lblPrice.TabIndex = 9;
+            lblPrice.Text = "Selling Price:\t";
+            // 
+            // txtSellingPrice
+            // 
+            txtSellingPrice.Location = new Point(12, 139);
+            txtSellingPrice.Name = "txtSellingPrice";
+            txtSellingPrice.Size = new Size(196, 27);
+            txtSellingPrice.TabIndex = 2;
+            // 
+            // lblStock
+            // 
+            lblStock.AutoSize = true;
+            lblStock.Location = new Point(12, 169);
+            lblStock.Name = "lblStock";
+            lblStock.Size = new Size(108, 20);
+            lblStock.TabIndex = 11;
+            lblStock.Text = "Stock Quantity:\t";
+            // 
+            // txtStockQuantity
+            // 
+            txtStockQuantity.Location = new Point(12, 192);
+            txtStockQuantity.Name = "txtStockQuantity";
+            txtStockQuantity.Size = new Size(196, 27);
+            txtStockQuantity.TabIndex = 3;
+            // 
+            // lblExpiration
+            // 
+            lblExpiration.AutoSize = true;
+            lblExpiration.Location = new Point(12, 222);
+            lblExpiration.Name = "lblExpiration";
+            lblExpiration.Size = new Size(115, 20);
+            lblExpiration.TabIndex = 13;
+            lblExpiration.Text = "Expiration Date:\t";
+            // 
+            // dtpExpirationDate
+            // 
+            dtpExpirationDate.Location = new Point(12, 245);
+            dtpExpirationDate.Name = "dtpExpirationDate";
+            dtpExpirationDate.Size = new Size(196, 27);
+            dtpExpirationDate.TabIndex = 4;
+            // 
+            // btnAddProduct
+            // 
+            btnAddProduct.Location = new Point(12, 278);
+            btnAddProduct.Name = "btnAddProduct";
+            btnAddProduct.Size = new Size(93, 38);
+            btnAddProduct.TabIndex = 5;
+            btnAddProduct.Text = "Add";
+            btnAddProduct.UseVisualStyleBackColor = true;
+            btnAddProduct.Click += btnAddProduct_Click;
+            // 
+            // btnUpdateProduct
+            // 
+            btnUpdateProduct.Location = new Point(111, 278);
+            btnUpdateProduct.Name = "btnUpdateProduct";
+            btnUpdateProduct.Size = new Size(97, 38);
+            btnUpdateProduct.TabIndex = 6;
+            btnUpdateProduct.Text = "Update";
+            btnUpdateProduct.UseVisualStyleBackColor = true;
+            btnUpdateProduct.Click += btnUpdateProduct_Click;
+            // 
+            // btnArchiveProduct
+            // 
+            btnArchiveProduct.Location = new Point(12, 387);
+            btnArchiveProduct.Name = "btnArchiveProduct";
+            btnArchiveProduct.Size = new Size(151, 29);
+            btnArchiveProduct.TabIndex = 7;
+            btnArchiveProduct.Text = "Delete";
+            btnArchiveProduct.UseVisualStyleBackColor = true;
+            btnArchiveProduct.Click += btnArchiveProduct_Click;
+            // 
+            // btnCategory
+            // 
+            btnCategory.Location = new Point(12, 422);
+            btnCategory.Name = "btnCategory";
+            btnCategory.Size = new Size(151, 29);
+            btnCategory.TabIndex = 1;
+            btnCategory.Text = "Add Category";
+            btnCategory.UseVisualStyleBackColor = true;
+            btnCategory.Click += btnCategory_Click;
+            // 
+            // NoExp
+            // 
+            NoExp.AutoSize = true;
+            NoExp.Location = new Point(129, 221);
+            NoExp.Name = "NoExp";
+            NoExp.Size = new Size(79, 24);
+            NoExp.TabIndex = 1;
+            NoExp.Text = "No Exp";
+            NoExp.UseVisualStyleBackColor = true;
+            NoExp.CheckedChanged += NoExp_CheckedChanged;
+            // 
+            // cmbProductName
+            // 
+            cmbProductName.FormattingEnabled = true;
+            cmbProductName.Location = new Point(12, 32);
+            cmbProductName.Name = "cmbProductName";
+            cmbProductName.Size = new Size(196, 28);
+            cmbProductName.TabIndex = 4;
+            // 
+            // Archive
+            // 
+            Archive.Location = new Point(12, 457);
+            Archive.Name = "Archive";
+            Archive.Size = new Size(151, 29);
+            Archive.TabIndex = 14;
+            Archive.Text = "Archives";
+            Archive.UseVisualStyleBackColor = true;
+            Archive.Click += Archive_Click;
+            // 
             // pnlSidebar
             // 
             pnlSidebar.BackColor = SystemColors.ActiveCaption;
@@ -159,161 +314,6 @@
             pnlSidebar.Name = "pnlSidebar";
             pnlSidebar.Size = new Size(250, 633);
             pnlSidebar.TabIndex = 3;
-            // 
-            // Archive
-            // 
-            Archive.Location = new Point(12, 457);
-            Archive.Name = "Archive";
-            Archive.Size = new Size(151, 29);
-            Archive.TabIndex = 14;
-            Archive.Text = "Archives";
-            Archive.UseVisualStyleBackColor = true;
-            Archive.Click += Archive_Click;
-            // 
-            // cmbProductName
-            // 
-            cmbProductName.FormattingEnabled = true;
-            cmbProductName.Location = new Point(12, 32);
-            cmbProductName.Name = "cmbProductName";
-            cmbProductName.Size = new Size(196, 28);
-            cmbProductName.TabIndex = 4;
-            // 
-            // NoExp
-            // 
-            NoExp.AutoSize = true;
-            NoExp.Location = new Point(129, 221);
-            NoExp.Name = "NoExp";
-            NoExp.Size = new Size(79, 24);
-            NoExp.TabIndex = 1;
-            NoExp.Text = "No Exp";
-            NoExp.UseVisualStyleBackColor = true;
-            NoExp.CheckedChanged += NoExp_CheckedChanged;
-            // 
-            // btnCategory
-            // 
-            btnCategory.Location = new Point(12, 422);
-            btnCategory.Name = "btnCategory";
-            btnCategory.Size = new Size(151, 29);
-            btnCategory.TabIndex = 1;
-            btnCategory.Text = "Add Category";
-            btnCategory.UseVisualStyleBackColor = true;
-            btnCategory.Click += btnCategory_Click;
-            // 
-            // btnArchiveProduct
-            // 
-            btnArchiveProduct.Location = new Point(91, 367);
-            btnArchiveProduct.Name = "btnArchiveProduct";
-            btnArchiveProduct.Size = new Size(72, 38);
-            btnArchiveProduct.TabIndex = 7;
-            btnArchiveProduct.Text = "Delete";
-            btnArchiveProduct.UseVisualStyleBackColor = true;
-            btnArchiveProduct.Click += btnArchiveProduct_Click;
-            // 
-            // btnUpdateProduct
-            // 
-            btnUpdateProduct.Location = new Point(12, 367);
-            btnUpdateProduct.Name = "btnUpdateProduct";
-            btnUpdateProduct.Size = new Size(72, 38);
-            btnUpdateProduct.TabIndex = 6;
-            btnUpdateProduct.Text = "Update";
-            btnUpdateProduct.UseVisualStyleBackColor = true;
-            btnUpdateProduct.Click += btnUpdateProduct_Click;
-            // 
-            // btnAddProduct
-            // 
-            btnAddProduct.Location = new Point(12, 278);
-            btnAddProduct.Name = "btnAddProduct";
-            btnAddProduct.Size = new Size(72, 38);
-            btnAddProduct.TabIndex = 5;
-            btnAddProduct.Text = "Add";
-            btnAddProduct.UseVisualStyleBackColor = true;
-            btnAddProduct.Click += btnAddProduct_Click;
-            // 
-            // dtpExpirationDate
-            // 
-            dtpExpirationDate.Location = new Point(12, 245);
-            dtpExpirationDate.Name = "dtpExpirationDate";
-            dtpExpirationDate.Size = new Size(196, 27);
-            dtpExpirationDate.TabIndex = 4;
-            // 
-            // lblExpiration
-            // 
-            lblExpiration.AutoSize = true;
-            lblExpiration.Location = new Point(12, 222);
-            lblExpiration.Name = "lblExpiration";
-            lblExpiration.Size = new Size(115, 20);
-            lblExpiration.TabIndex = 13;
-            lblExpiration.Text = "Expiration Date:\t";
-            // 
-            // txtStockQuantity
-            // 
-            txtStockQuantity.Location = new Point(12, 192);
-            txtStockQuantity.Name = "txtStockQuantity";
-            txtStockQuantity.Size = new Size(196, 27);
-            txtStockQuantity.TabIndex = 3;
-            // 
-            // lblStock
-            // 
-            lblStock.AutoSize = true;
-            lblStock.Location = new Point(12, 169);
-            lblStock.Name = "lblStock";
-            lblStock.Size = new Size(108, 20);
-            lblStock.TabIndex = 11;
-            lblStock.Text = "Stock Quantity:\t";
-            // 
-            // txtSellingPrice
-            // 
-            txtSellingPrice.Location = new Point(12, 139);
-            txtSellingPrice.Name = "txtSellingPrice";
-            txtSellingPrice.Size = new Size(196, 27);
-            txtSellingPrice.TabIndex = 2;
-            // 
-            // lblPrice
-            // 
-            lblPrice.AutoSize = true;
-            lblPrice.Location = new Point(12, 116);
-            lblPrice.Name = "lblPrice";
-            lblPrice.Size = new Size(93, 20);
-            lblPrice.TabIndex = 9;
-            lblPrice.Text = "Selling Price:\t";
-            // 
-            // cmbCategory
-            // 
-            cmbCategory.DropDownStyle = ComboBoxStyle.DropDownList;
-            cmbCategory.FormattingEnabled = true;
-            cmbCategory.Location = new Point(12, 85);
-            cmbCategory.Name = "cmbCategory";
-            cmbCategory.Size = new Size(196, 28);
-            cmbCategory.TabIndex = 1;
-            cmbCategory.SelectedIndexChanged += cmbCategory_SelectedIndexChanged;
-            // 
-            // lblCategory
-            // 
-            lblCategory.AutoSize = true;
-            lblCategory.Location = new Point(12, 62);
-            lblCategory.Name = "lblCategory";
-            lblCategory.Size = new Size(72, 20);
-            lblCategory.TabIndex = 7;
-            lblCategory.Text = "Category:\t";
-            // 
-            // lblProductName
-            // 
-            lblProductName.AutoSize = true;
-            lblProductName.Location = new Point(12, 9);
-            lblProductName.Name = "lblProductName";
-            lblProductName.Size = new Size(107, 20);
-            lblProductName.TabIndex = 0;
-            lblProductName.Text = "Product Name:\t";
-            // 
-            // btnBack
-            // 
-            btnBack.Location = new Point(12, 564);
-            btnBack.Name = "btnBack";
-            btnBack.Size = new Size(64, 54);
-            btnBack.TabIndex = 6;
-            btnBack.Text = "Back";
-            btnBack.UseVisualStyleBackColor = true;
-            btnBack.Click += btnBack_Click;
             // 
             // Inventory
             // 
@@ -341,28 +341,28 @@
 
         private Panel pnlMainContent;
         private Panel pnlHeader;
-        private Panel pnlSidebar;
-        private Button btnBack;
         private DataGridView dgvInventory;
-        private ComboBox cmbCategory;
-        private Label lblCategory;
-        private Label lblProductName;
-        private Label lblStock;
-        private TextBox txtSellingPrice;
-        private Label lblPrice;
-        private Button btnArchiveProduct;
-        private Button btnUpdateProduct;
-        private Button btnAddProduct;
-        private DateTimePicker dtpExpirationDate;
-        private Label lblExpiration;
-        private TextBox txtStockQuantity;
-        private Button btnCategory;
-        private CheckBox NoExp;
         private Label TotalPrices;
         private Label label3;
         private Label TotalStocks;
         private Label label1;
+        private Button btnBack;
+        private Label lblProductName;
+        private Label lblCategory;
+        private ComboBox cmbCategory;
+        private Label lblPrice;
+        private TextBox txtSellingPrice;
+        private Label lblStock;
+        private TextBox txtStockQuantity;
+        private Label lblExpiration;
+        private DateTimePicker dtpExpirationDate;
+        private Button btnAddProduct;
+        private Button btnUpdateProduct;
+        private Button btnArchiveProduct;
+        private Button btnCategory;
+        private CheckBox NoExp;
         private ComboBox cmbProductName;
         private Button Archive;
+        private Panel pnlSidebar;
     }
 }

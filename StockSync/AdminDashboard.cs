@@ -28,7 +28,7 @@ namespace StockSync
         private void btnInventory_Click(object sender, EventArgs e)
         {
             this.Hide();
-            Inventory inventoryForm = new Inventory();
+            Inventory inventoryForm = new Inventory(currentUserID);
             inventoryForm.Show();
         }
 
@@ -45,6 +45,14 @@ namespace StockSync
             Thread.Sleep(500);
             Sales salesForm = new Sales(currentUserID);
             salesForm.Show();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            Thread.Sleep(500);
+            InventoryReportForm reportForm = new InventoryReportForm(currentUserID);
+            reportForm.ShowDialog();
         }
     }
 }

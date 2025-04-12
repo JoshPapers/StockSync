@@ -74,8 +74,8 @@ namespace StockSync
                         {
                             if (Convert.ToInt32(row.Cells["Stock"].Value) == 0)
                             {
-                                row.DefaultCellStyle.BackColor = Color.DarkRed;
-                                row.DefaultCellStyle.ForeColor = Color.White;
+                                row.DefaultCellStyle.BackColor = Color.LemonChiffon;
+                                row.DefaultCellStyle.ForeColor = Color.Black;
                             }
                         }
                         foreach (DataGridViewRow row in dgvArchive.Rows)
@@ -88,8 +88,8 @@ namespace StockSync
 
                             if (stock == 0 || isExpired)
                             {
-                                row.DefaultCellStyle.BackColor = Color.DarkRed;
-                                row.DefaultCellStyle.ForeColor = Color.White;
+                                row.DefaultCellStyle.BackColor = Color.LemonChiffon;
+                                row.DefaultCellStyle.ForeColor = Color.Black;
                             }
                         }
                     }

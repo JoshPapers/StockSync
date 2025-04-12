@@ -30,6 +30,7 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AdminDashboard));
             pnlSidebar = new Panel();
+            button1 = new Button();
             picLogo = new PictureBox();
             button3 = new Button();
             btnSales = new Button();
@@ -37,6 +38,7 @@
             btnInventory = new Button();
             pnlHeader = new Panel();
             pnlMainContent = new Panel();
+            button2 = new Button();
             pnlSidebar.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)picLogo).BeginInit();
             SuspendLayout();
@@ -44,6 +46,8 @@
             // pnlSidebar
             // 
             pnlSidebar.BackColor = SystemColors.ActiveCaption;
+            pnlSidebar.Controls.Add(button2);
+            pnlSidebar.Controls.Add(button1);
             pnlSidebar.Controls.Add(picLogo);
             pnlSidebar.Controls.Add(button3);
             pnlSidebar.Controls.Add(btnSales);
@@ -54,6 +58,16 @@
             pnlSidebar.Name = "pnlSidebar";
             pnlSidebar.Size = new Size(250, 633);
             pnlSidebar.TabIndex = 0;
+            // 
+            // button1
+            // 
+            button1.Location = new Point(12, 202);
+            button1.Name = "button1";
+            button1.Size = new Size(223, 41);
+            button1.TabIndex = 9;
+            button1.Text = "Inventory Report";
+            button1.UseVisualStyleBackColor = true;
+            button1.Click += button1_Click;
             // 
             // picLogo
             // 
@@ -67,7 +81,7 @@
             // 
             // button3
             // 
-            button3.Location = new Point(12, 279);
+            button3.Location = new Point(12, 428);
             button3.Name = "button3";
             button3.Size = new Size(223, 41);
             button3.TabIndex = 8;
@@ -76,7 +90,7 @@
             // 
             // btnSales
             // 
-            btnSales.Location = new Point(12, 217);
+            btnSales.Location = new Point(12, 289);
             btnSales.Name = "btnSales";
             btnSales.Size = new Size(223, 41);
             btnSales.TabIndex = 7;
@@ -121,6 +135,15 @@
             pnlMainContent.Size = new Size(982, 508);
             pnlMainContent.TabIndex = 2;
             // 
+            // button2
+            // 
+            button2.Location = new Point(12, 336);
+            button2.Name = "button2";
+            button2.Size = new Size(223, 41);
+            button2.TabIndex = 11;
+            button2.Text = "Sales Report";
+            button2.UseVisualStyleBackColor = true;
+            // 
             // AdminDashboard
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -133,7 +156,6 @@
             MaximumSize = new Size(1250, 680);
             MinimumSize = new Size(1250, 680);
             Name = "AdminDashboard";
-            Text = "Owner";
             Load += Form1_Load;
             pnlSidebar.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)picLogo).EndInit();
@@ -150,5 +172,7 @@
         private PictureBox picLogo;
         private Panel pnlHeader;
         private Panel pnlMainContent;
+        private Button button1;
+        private Button button2;
     }
 }
