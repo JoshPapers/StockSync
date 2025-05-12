@@ -30,6 +30,7 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AdminDashboard));
             pnlSidebar = new Panel();
+            button2 = new Button();
             button1 = new Button();
             picLogo = new PictureBox();
             button3 = new Button();
@@ -38,9 +39,16 @@
             btnInventory = new Button();
             pnlHeader = new Panel();
             pnlMainContent = new Panel();
-            button2 = new Button();
+            dataGridView2 = new DataGridView();
+            dgvInventory = new DataGridView();
+            button4 = new Button();
+            button5 = new Button();
             pnlSidebar.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)picLogo).BeginInit();
+            pnlHeader.SuspendLayout();
+            pnlMainContent.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dataGridView2).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)dgvInventory).BeginInit();
             SuspendLayout();
             // 
             // pnlSidebar
@@ -58,6 +66,16 @@
             pnlSidebar.Name = "pnlSidebar";
             pnlSidebar.Size = new Size(250, 633);
             pnlSidebar.TabIndex = 0;
+            // 
+            // button2
+            // 
+            button2.Location = new Point(12, 336);
+            button2.Name = "button2";
+            button2.Size = new Size(223, 41);
+            button2.TabIndex = 11;
+            button2.Text = "Sales Report";
+            button2.UseVisualStyleBackColor = true;
+            button2.Click += button2_Click;
             // 
             // button1
             // 
@@ -100,9 +118,9 @@
             // 
             // btnLogout
             // 
-            btnLogout.Location = new Point(12, 564);
+            btnLogout.Location = new Point(12, 589);
             btnLogout.Name = "btnLogout";
-            btnLogout.Size = new Size(64, 54);
+            btnLogout.Size = new Size(77, 32);
             btnLogout.TabIndex = 6;
             btnLogout.Text = "Log Out";
             btnLogout.UseVisualStyleBackColor = true;
@@ -121,6 +139,8 @@
             // pnlHeader
             // 
             pnlHeader.BackColor = SystemColors.GradientInactiveCaption;
+            pnlHeader.Controls.Add(button5);
+            pnlHeader.Controls.Add(button4);
             pnlHeader.Dock = DockStyle.Top;
             pnlHeader.Location = new Point(250, 0);
             pnlHeader.Name = "pnlHeader";
@@ -129,20 +149,51 @@
             // 
             // pnlMainContent
             // 
+            pnlMainContent.Controls.Add(dataGridView2);
+            pnlMainContent.Controls.Add(dgvInventory);
             pnlMainContent.Dock = DockStyle.Fill;
             pnlMainContent.Location = new Point(250, 125);
             pnlMainContent.Name = "pnlMainContent";
             pnlMainContent.Size = new Size(982, 508);
             pnlMainContent.TabIndex = 2;
             // 
-            // button2
+            // dataGridView2
             // 
-            button2.Location = new Point(12, 336);
-            button2.Name = "button2";
-            button2.Size = new Size(223, 41);
-            button2.TabIndex = 11;
-            button2.Text = "Sales Report";
-            button2.UseVisualStyleBackColor = true;
+            dataGridView2.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridView2.Location = new Point(506, 30);
+            dataGridView2.Name = "dataGridView2";
+            dataGridView2.RowHeadersWidth = 51;
+            dataGridView2.Size = new Size(448, 300);
+            dataGridView2.TabIndex = 1;
+            // 
+            // dgvInventory
+            // 
+            dgvInventory.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgvInventory.Location = new Point(28, 30);
+            dgvInventory.Name = "dgvInventory";
+            dgvInventory.RowHeadersWidth = 51;
+            dgvInventory.Size = new Size(448, 300);
+            dgvInventory.TabIndex = 0;
+            dgvInventory.CellContentClick += dataGridView1_CellContentClick;
+            // 
+            // button4
+            // 
+            button4.Location = new Point(17, 12);
+            button4.Name = "button4";
+            button4.Size = new Size(223, 41);
+            button4.TabIndex = 12;
+            button4.Text = "Add Supplies";
+            button4.UseVisualStyleBackColor = true;
+            button4.Click += button4_Click;
+            // 
+            // button5
+            // 
+            button5.Location = new Point(253, 12);
+            button5.Name = "button5";
+            button5.Size = new Size(223, 41);
+            button5.TabIndex = 13;
+            button5.Text = "Available Supplies";
+            button5.UseVisualStyleBackColor = true;
             // 
             // AdminDashboard
             // 
@@ -159,6 +210,10 @@
             Load += Form1_Load;
             pnlSidebar.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)picLogo).EndInit();
+            pnlHeader.ResumeLayout(false);
+            pnlMainContent.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)dataGridView2).EndInit();
+            ((System.ComponentModel.ISupportInitialize)dgvInventory).EndInit();
             ResumeLayout(false);
         }
 
@@ -174,5 +229,9 @@
         private Panel pnlMainContent;
         private Button button1;
         private Button button2;
+        private DataGridView dataGridView2;
+        private DataGridView dgvInventory;
+        private Button button5;
+        private Button button4;
     }
 }

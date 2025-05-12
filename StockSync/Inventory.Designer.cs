@@ -54,6 +54,8 @@
             cmbProductName = new ComboBox();
             Archive = new Button();
             pnlSidebar = new Panel();
+            label2 = new Label();
+            lblSupplyQuantity = new Label();
             pnlMainContent.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvInventory).BeginInit();
             pnlHeader.SuspendLayout();
@@ -201,7 +203,7 @@
             // 
             txtStockQuantity.Location = new Point(12, 192);
             txtStockQuantity.Name = "txtStockQuantity";
-            txtStockQuantity.Size = new Size(196, 27);
+            txtStockQuantity.Size = new Size(115, 27);
             txtStockQuantity.TabIndex = 3;
             // 
             // lblExpiration
@@ -273,11 +275,13 @@
             // 
             // cmbProductName
             // 
+            cmbProductName.DropDownStyle = ComboBoxStyle.DropDownList;
             cmbProductName.FormattingEnabled = true;
             cmbProductName.Location = new Point(12, 32);
             cmbProductName.Name = "cmbProductName";
             cmbProductName.Size = new Size(196, 28);
             cmbProductName.TabIndex = 4;
+            cmbProductName.SelectedIndexChanged += cmbProductName_SelectedIndexChanged;
             // 
             // Archive
             // 
@@ -292,6 +296,8 @@
             // pnlSidebar
             // 
             pnlSidebar.BackColor = SystemColors.ActiveCaption;
+            pnlSidebar.Controls.Add(lblSupplyQuantity);
+            pnlSidebar.Controls.Add(label2);
             pnlSidebar.Controls.Add(Archive);
             pnlSidebar.Controls.Add(cmbProductName);
             pnlSidebar.Controls.Add(NoExp);
@@ -314,6 +320,26 @@
             pnlSidebar.Name = "pnlSidebar";
             pnlSidebar.Size = new Size(250, 633);
             pnlSidebar.TabIndex = 3;
+            // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Location = new Point(142, 169);
+            label2.Name = "label2";
+            label2.Size = new Size(57, 20);
+            label2.TabIndex = 15;
+            label2.Text = "Supply:";
+            // 
+            // lblSupplyQuantity
+            // 
+            lblSupplyQuantity.AutoSize = true;
+            lblSupplyQuantity.BackColor = Color.White;
+            lblSupplyQuantity.BorderStyle = BorderStyle.FixedSingle;
+            lblSupplyQuantity.Location = new Point(155, 195);
+            lblSupplyQuantity.Name = "lblSupplyQuantity";
+            lblSupplyQuantity.Size = new Size(19, 22);
+            lblSupplyQuantity.TabIndex = 1;
+            lblSupplyQuantity.Text = "0";
             // 
             // Inventory
             // 
@@ -364,5 +390,7 @@
         private ComboBox cmbProductName;
         private Button Archive;
         private Panel pnlSidebar;
+        private Label lblSupplyQuantity;
+        private Label label2;
     }
 }

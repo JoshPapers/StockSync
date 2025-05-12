@@ -22,19 +22,21 @@ namespace StockSync
                 using (SqlConnection conn = DatabaseConnect.GetConnection())
                 {
                     conn.Open();
-                    string query = @"SELECT 
-                    i.InventoryID,
-                    p.ProductID,
-                    p.ProductName,
-                    COALESCE(c.CategoryName, 'No Category') AS CategoryName,
-                    COALESCE(i.Stock, 0) AS Stock,
-                    i.SellingPrice,
-                    i.ExpirationDate
-                FROM Products p
-                LEFT JOIN Inventory i ON p.ProductID = i.ProductID
-                LEFT JOIN Categories c ON p.CategoryID = c.CategoryID
-                WHERE (i.IsArchived = 0 OR i.IsArchived IS NULL)
-                AND COALESCE(i.Stock, 0) >= 0;";
+                    string query = @"
+                    SELECT 
+                        i.InventoryID,
+                        p.ProductID,
+                        p.ProductName,
+                        COALESCE(c.CategoryName, 'No Category') AS CategoryName,
+                        i.Stock,
+                        i.SellingPrice,
+                        i.ExpirationDate
+                    FROM Inventory i
+                    INNER JOIN Products p ON i.ProductID = p.ProductID
+                    LEFT JOIN Categories c ON p.CategoryID = c.CategoryID
+                    WHERE (i.IsArchived = 0 OR i.IsArchived IS NULL)
+                    AND i.Stock >= 0";
+
 
                     using (SqlDataAdapter adapter = new SqlDataAdapter(query, conn))
                     {
@@ -114,7 +116,18 @@ namespace StockSync
 
         private void LoadProductNames()
         {
-            cmbProductName.Items.Clear();
+            cmbProductName.DropDownStyle = ComboBoxStyle.DropDownList;
+            cmbProductName.DropDownHeight = 150;
+            int maxLength = 0;
+            foreach (var item in cmbProductName.Items)
+            {
+                int itemLength = TextRenderer.MeasureText(item.ToString(), cmbProductName.Font).Width;
+                if (itemLength > maxLength)
+                {
+                    maxLength = itemLength;
+                }
+            }
+            cmbProductName.DropDownWidth = maxLength + 10;
 
             string query = "SELECT DISTINCT ProductName FROM Products";
             using (SqlConnection conn = DatabaseConnect.GetConnection())
@@ -127,11 +140,6 @@ namespace StockSync
                     cmbProductName.Items.Add(reader["ProductName"].ToString());
                 }
             }
-
-            // Allow manual input
-            cmbProductName.DropDownStyle = ComboBoxStyle.DropDown;
-            cmbProductName.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
-            cmbProductName.AutoCompleteSource = AutoCompleteSource.ListItems;
         }
 
         // Load categories into the category combo box
@@ -208,6 +216,18 @@ namespace StockSync
                     MessageBox.Show("Please enter or select a product name!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
+                if (!decimal.TryParse(txtSellingPrice.Text, out decimal sellingPrice) || sellingPrice < 0)
+                {
+                    MessageBox.Show("Please enter a valid non-negative selling price.", "Invalid Input", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                if (!int.TryParse(txtStockQuantity.Text, out int stock) || stock < 0)
+                {
+                    MessageBox.Show("Please enter a valid non-negative stock quantity.", "Invalid Input", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
 
                 string selectedProductName = cmbProductName.Text.Trim();
                 int categoryID = 0;
@@ -241,7 +261,6 @@ namespace StockSync
                     }
 
                     int productId;
-                    decimal sellingPrice = Convert.ToDecimal(txtSellingPrice.Text);
 
                     // 2. Check if product already exists
                     string checkProductQuery = "SELECT ProductID FROM Products WHERE ProductName = @ProductName";
@@ -277,6 +296,42 @@ namespace StockSync
                         cmdInsert.Parameters.AddWithValue("@ExpirationDate", NoExp.Checked ? (object)DBNull.Value : dtpExpirationDate.Value);
                         cmdInsert.ExecuteNonQuery();
                     }
+
+                    // 4. Update QuantityPurchased in Products table after adding stock to inventory
+                    // 1. Kunin ang current QuantityPurchased (supply stock)
+                    string checkSupplyQuery = "SELECT QuantityPurchased FROM Products WHERE ProductID = @ProductID";
+                    using (SqlCommand checkCmd = new SqlCommand(checkSupplyQuery, conn))
+                    {
+                        checkCmd.Parameters.AddWithValue("@ProductID", productId);
+                        object result = checkCmd.ExecuteScalar();
+
+                        if (result != null && result != DBNull.Value)
+                        {
+                            int currentSupply = Convert.ToInt32(result);
+                            int quantityToAdd = Convert.ToInt32(txtStockQuantity.Text);
+
+                            if (quantityToAdd > currentSupply)
+                            {
+                                MessageBox.Show("Not enough supply stock! You only have " + currentSupply + " in supplies.", "Insufficient Supply", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                return; // stop execution
+                            }
+
+                            // Proceed with updating QuantityPurchased
+                            string updateProductQuery = "UPDATE Products SET QuantityPurchased = QuantityPurchased - @QuantityAdded WHERE ProductID = @ProductID";
+                            using (SqlCommand updateCmd = new SqlCommand(updateProductQuery, conn))
+                            {
+                                updateCmd.Parameters.AddWithValue("@QuantityAdded", quantityToAdd);
+                                updateCmd.Parameters.AddWithValue("@ProductID", productId);
+                                updateCmd.ExecuteNonQuery();
+                            }
+                        }
+                        else
+                        {
+                            MessageBox.Show("Supply data not found for the selected product!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return;
+                        }
+                    }
+
                 }
 
                 MessageBox.Show("Product stock added successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -290,6 +345,7 @@ namespace StockSync
 
             UpdateTotalValues();
         }
+
 
         // Disable expiration date picker if "No Exp" is checked
         private void NoExp_CheckedChanged(object sender, EventArgs e)
@@ -329,25 +385,42 @@ namespace StockSync
         {
             if (dgvInventory.SelectedRows.Count > 0)
             {
-                DialogResult confirmArchive = MessageBox.Show("Do you want to archive this product?", "Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                DialogResult confirmArchive = MessageBox.Show("Do you want to archive this product?", "Confirm Archive", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
                 if (confirmArchive == DialogResult.Yes)
                 {
                     DataGridViewRow selectedRow = dgvInventory.SelectedRows[0];
                     int inventoryId = Convert.ToInt32(selectedRow.Cells["InventoryID"].Value);
+                    int stock = Convert.ToInt32(selectedRow.Cells["Stock"].Value);
+                    DateTime? expirationDate = selectedRow.Cells["ExpirationDate"].Value as DateTime?;
+                    int productId = Convert.ToInt32(selectedRow.Cells["ProductID"].Value);
 
-                    using (SqlConnection conn = DatabaseConnect.GetConnection())
+                    // Check if the product is expired or has no stock
+                    if (stock == 0)
                     {
-                        conn.Open();
-                        string archiveQuery = "UPDATE Inventory SET IsArchived = 1 WHERE InventoryID = @InventoryID";
-                        using (SqlCommand cmd = new SqlCommand(archiveQuery, conn))
+                        ArchiveProduct(inventoryId); // Proceed with archiving the product
+                        return;
+                    }
+                    else if (expirationDate.HasValue && expirationDate.Value < DateTime.Now)
+                    {
+                        ArchiveProduct(inventoryId); // Proceed with archiving the expired product
+                        return;
+                    }
+                    else
+                    {
+                        // Ask the user if they want to return stock to the supply
+                        DialogResult confirmReturnStock = MessageBox.Show("Do you want to return the stock to the supply?", "Return Stock", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                        if (confirmReturnStock == DialogResult.Yes)
                         {
-                            cmd.Parameters.AddWithValue("@InventoryID", inventoryId);
-                            cmd.ExecuteNonQuery();
+                            // Code to return stock to supply
+                            ReturnStockToSupply(inventoryId, stock, productId);
+                            ArchiveProduct(inventoryId); // Archive the product after return
+                        }
+                        else
+                        {
+                            MessageBox.Show("Product archived without returning stock.", "Action Canceled", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            ArchiveProduct(inventoryId); // Just archive the product
                         }
                     }
-
-                    MessageBox.Show("Product has been archived successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    LoadInventory(); // Refresh inventory list to hide archived products
                 }
             }
             else
@@ -355,6 +428,51 @@ namespace StockSync
                 MessageBox.Show("Please select a product to archive.", "Archive Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
+
+        private void ArchiveProduct(int inventoryId)
+        {
+            using (SqlConnection conn = DatabaseConnect.GetConnection())
+            {
+                conn.Open();
+                string archiveQuery = "UPDATE Inventory SET IsArchived = 1 WHERE InventoryID = @InventoryID";
+                using (SqlCommand cmd = new SqlCommand(archiveQuery, conn))
+                {
+                    cmd.Parameters.AddWithValue("@InventoryID", inventoryId);
+                    cmd.ExecuteNonQuery();
+                }
+            }
+
+            MessageBox.Show("Product has been archived successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            LoadInventory(); // Refresh inventory list to hide archived products
+        }
+
+        private void ReturnStockToSupply(int inventoryId, int stock, int productId)
+        {
+            using (SqlConnection conn = DatabaseConnect.GetConnection())
+            {
+                conn.Open();
+                // Update the Inventory stock to 0 as it is returned
+                string updateInventoryQuery = "UPDATE Inventory SET Stock = 0 WHERE InventoryID = @InventoryID";
+                using (SqlCommand cmd = new SqlCommand(updateInventoryQuery, conn))
+                {
+                    cmd.Parameters.AddWithValue("@InventoryID", inventoryId);
+                    cmd.ExecuteNonQuery();
+                }
+
+                // Assuming there's a column for supply stock in your database
+                string updateSupplyQuery = "UPDATE Products SET QuantityPurchased = QuantityPurchased + @Stock WHERE ProductID = @ProductID";
+                using (SqlCommand cmd = new SqlCommand(updateSupplyQuery, conn))
+                {
+                    cmd.Parameters.AddWithValue("@Stock", stock);
+                    cmd.Parameters.AddWithValue("@ProductID", productId);
+                    cmd.ExecuteNonQuery();
+                }
+            }
+
+            MessageBox.Show("Stock has been returned to the supply.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+
 
         private void UpdateTotalValues()
         {
@@ -364,7 +482,9 @@ namespace StockSync
                 string query = @" SELECT 
                             SUM(i.Stock) AS TotalStocks, 
                             SUM(i.Stock * i.SellingPrice) AS TotalPrices
-                          FROM Inventory i";
+                          FROM Inventory i
+                            WHERE (i.IsArchived = 0 OR i.IsArchived IS NULL)
+                            AND COALESCE(i.Stock, 0) >= 0;";
 
                 using (SqlCommand command = new SqlCommand(query, connection))
                 using (SqlDataReader reader = command.ExecuteReader())
@@ -401,6 +521,11 @@ namespace StockSync
         {
             Archive archives = new Archive();
             archives.ShowDialog();
+        }
+
+        private void cmbProductName_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

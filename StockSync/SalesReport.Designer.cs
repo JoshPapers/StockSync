@@ -1,6 +1,6 @@
 ﻿namespace StockSync
 {
-    partial class InventoryReportForm
+    partial class SalesReport
     {
         /// <summary>
         /// Required designer variable.
@@ -28,71 +28,52 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(InventoryReportForm));
-            lblTitle = new Label();
-            label1 = new Label();
-            panel1 = new Panel();
-            label2 = new Label();
-            label3 = new Label();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SalesReport));
+            btnPrint = new Button();
+            btnGenerateReport = new Button();
+            dgvInventoryReport = new DataGridView();
             cmbProducts = new ComboBox();
             panel2 = new Panel();
             btnBack = new Button();
             txtYear = new TextBox();
+            label1 = new Label();
             cmbMonth = new ComboBox();
-            btnGenerateReport = new Button();
-            dgvInventoryReport = new DataGridView();
-            btnPrint = new Button();
-            panel1.SuspendLayout();
-            panel2.SuspendLayout();
+            label2 = new Label();
+            label3 = new Label();
+            panel1 = new Panel();
+            lblTitle = new Label();
             ((System.ComponentModel.ISupportInitialize)dgvInventoryReport).BeginInit();
+            panel2.SuspendLayout();
+            panel1.SuspendLayout();
             SuspendLayout();
             // 
-            // lblTitle
+            // btnPrint
             // 
-            lblTitle.AutoSize = true;
-            lblTitle.Font = new Font("Segoe UI", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblTitle.Location = new Point(404, 38);
-            lblTitle.Name = "lblTitle";
-            lblTitle.Size = new Size(234, 31);
-            lblTitle.TabIndex = 0;
-            lblTitle.Text = "INVENTORY REPORT\t";
+            btnPrint.Location = new Point(867, 622);
+            btnPrint.Name = "btnPrint";
+            btnPrint.Size = new Size(151, 29);
+            btnPrint.TabIndex = 15;
+            btnPrint.Text = "Print Report";
+            btnPrint.UseVisualStyleBackColor = true;
             // 
-            // label1
+            // btnGenerateReport
             // 
-            label1.AutoSize = true;
-            label1.Location = new Point(27, 24);
-            label1.Name = "label1";
-            label1.Size = new Size(55, 20);
-            label1.TabIndex = 1;
-            label1.Text = "Month:";
+            btnGenerateReport.Location = new Point(867, 122);
+            btnGenerateReport.Name = "btnGenerateReport";
+            btnGenerateReport.Size = new Size(151, 29);
+            btnGenerateReport.TabIndex = 13;
+            btnGenerateReport.Text = "Generate Report";
+            btnGenerateReport.UseVisualStyleBackColor = true;
             // 
-            // panel1
+            // dgvInventoryReport
             // 
-            panel1.BackColor = SystemColors.GradientInactiveCaption;
-            panel1.Controls.Add(lblTitle);
-            panel1.Dock = DockStyle.Top;
-            panel1.Location = new Point(0, 0);
-            panel1.Name = "panel1";
-            panel1.Size = new Size(1045, 105);
-            panel1.TabIndex = 2;
-            // 
-            // label2
-            // 
-            label2.AutoSize = true;
-            label2.Location = new Point(27, 62);
-            label2.Name = "label2";
-            label2.Size = new Size(40, 20);
-            label2.TabIndex = 4;
-            label2.Text = "Year:";
-            // 
-            // label3
-            // 
-            label3.AutoSize = true;
-            label3.Location = new Point(278, 126);
-            label3.Name = "label3";
-            label3.Size = new Size(107, 20);
-            label3.TabIndex = 6;
-            label3.Text = "Select Product:";
+            dgvInventoryReport.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgvInventoryReport.Location = new Point(294, 164);
+            dgvInventoryReport.Name = "dgvInventoryReport";
+            dgvInventoryReport.ReadOnly = true;
+            dgvInventoryReport.RowHeadersWidth = 51;
+            dgvInventoryReport.Size = new Size(724, 452);
+            dgvInventoryReport.TabIndex = 16;
             // 
             // cmbProducts
             // 
@@ -101,7 +82,7 @@
             cmbProducts.Location = new Point(391, 123);
             cmbProducts.Name = "cmbProducts";
             cmbProducts.Size = new Size(457, 28);
-            cmbProducts.TabIndex = 7;
+            cmbProducts.TabIndex = 12;
             // 
             // panel2
             // 
@@ -115,7 +96,7 @@
             panel2.Location = new Point(0, 105);
             panel2.Name = "panel2";
             panel2.Size = new Size(260, 558);
-            panel2.TabIndex = 8;
+            panel2.TabIndex = 14;
             // 
             // btnBack
             // 
@@ -134,6 +115,15 @@
             txtYear.Size = new Size(151, 27);
             txtYear.TabIndex = 1;
             // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Location = new Point(27, 24);
+            label1.Name = "label1";
+            label1.Size = new Size(55, 20);
+            label1.TabIndex = 1;
+            label1.Text = "Month:";
+            // 
             // cmbMonth
             // 
             cmbMonth.DropDownStyle = ComboBoxStyle.DropDownList;
@@ -143,40 +133,48 @@
             cmbMonth.Size = new Size(151, 28);
             cmbMonth.TabIndex = 9;
             // 
-            // btnGenerateReport
+            // label2
             // 
-            btnGenerateReport.Location = new Point(867, 122);
-            btnGenerateReport.Name = "btnGenerateReport";
-            btnGenerateReport.Size = new Size(151, 29);
-            btnGenerateReport.TabIndex = 8;
-            btnGenerateReport.Text = "Generate Report";
-            btnGenerateReport.UseVisualStyleBackColor = true;
-            btnGenerateReport.Click += btnGenerateReport_Click;
+            label2.AutoSize = true;
+            label2.Location = new Point(27, 62);
+            label2.Name = "label2";
+            label2.Size = new Size(40, 20);
+            label2.TabIndex = 4;
+            label2.Text = "Year:";
             // 
-            // dgvInventoryReport
+            // label3
             // 
-            dgvInventoryReport.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvInventoryReport.Location = new Point(294, 164);
-            dgvInventoryReport.Name = "dgvInventoryReport";
-            dgvInventoryReport.ReadOnly = true;
-            dgvInventoryReport.RowHeadersWidth = 51;
-            dgvInventoryReport.Size = new Size(724, 452);
-            dgvInventoryReport.TabIndex = 9;
+            label3.AutoSize = true;
+            label3.Location = new Point(278, 126);
+            label3.Name = "label3";
+            label3.Size = new Size(107, 20);
+            label3.TabIndex = 11;
+            label3.Text = "Select Product:";
             // 
-            // btnPrint
+            // panel1
             // 
-            btnPrint.Location = new Point(867, 622);
-            btnPrint.Name = "btnPrint";
-            btnPrint.Size = new Size(151, 29);
-            btnPrint.TabIndex = 9;
-            btnPrint.Text = "Print Report";
-            btnPrint.UseVisualStyleBackColor = true;
+            panel1.BackColor = SystemColors.GradientInactiveCaption;
+            panel1.Controls.Add(lblTitle);
+            panel1.Dock = DockStyle.Top;
+            panel1.Location = new Point(0, 0);
+            panel1.Name = "panel1";
+            panel1.Size = new Size(1045, 105);
+            panel1.TabIndex = 10;
             // 
-            // InventoryReportForm
+            // lblTitle
+            // 
+            lblTitle.AutoSize = true;
+            lblTitle.Font = new Font("Segoe UI", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblTitle.Location = new Point(437, 38);
+            lblTitle.Name = "lblTitle";
+            lblTitle.Size = new Size(172, 31);
+            lblTitle.TabIndex = 0;
+            lblTitle.Text = "SALES REPORT";
+            // 
+            // SalesReport
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            BackColor = SystemColors.ButtonFace;
             ClientSize = new Size(1045, 663);
             Controls.Add(btnPrint);
             Controls.Add(btnGenerateReport);
@@ -188,32 +186,32 @@
             Icon = (Icon)resources.GetObject("$this.Icon");
             MaximumSize = new Size(1063, 710);
             MinimumSize = new Size(1063, 710);
-            Name = "InventoryReportForm";
-            Text = "Inventory Report";
-            Load += InventoryReportForm_Load;
-            panel1.ResumeLayout(false);
-            panel1.PerformLayout();
+            Name = "SalesReport";
+            Text = "SalesReport";
+            Load += SalesReport_Load;
+            ((System.ComponentModel.ISupportInitialize)dgvInventoryReport).EndInit();
             panel2.ResumeLayout(false);
             panel2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)dgvInventoryReport).EndInit();
+            panel1.ResumeLayout(false);
+            panel1.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
 
         #endregion
 
-        private Label lblTitle;
-        private Label label1;
-        private Panel panel1;
-        private Label label2;
-        private Label label3;
-        private ComboBox cmbProducts;
-        private Panel panel2;
+        private Button btnPrint;
         private Button btnGenerateReport;
         private DataGridView dgvInventoryReport;
-        private Button btnPrint;
+        private ComboBox cmbProducts;
+        private Panel panel2;
         private Button btnBack;
-        private ComboBox cmbMonth;
         private TextBox txtYear;
+        private Label label1;
+        private ComboBox cmbMonth;
+        private Label label2;
+        private Label label3;
+        private Panel panel1;
+        private Label lblTitle;
     }
 }

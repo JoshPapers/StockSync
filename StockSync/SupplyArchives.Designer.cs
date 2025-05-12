@@ -1,6 +1,6 @@
 ﻿namespace StockSync
 {
-    partial class Archive
+    partial class SupplyArchives
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Archive));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SupplyArchives));
             dgvArchive = new DataGridView();
             Back = new Button();
             ((System.ComponentModel.ISupportInitialize)dgvArchive).BeginInit();
@@ -37,36 +37,32 @@
             // dgvArchive
             // 
             dgvArchive.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvArchive.Location = new Point(25, 23);
+            dgvArchive.Location = new Point(24, 22);
             dgvArchive.Name = "dgvArchive";
             dgvArchive.RowHeadersWidth = 51;
-            dgvArchive.Size = new Size(584, 392);
-            dgvArchive.TabIndex = 0;
+            dgvArchive.Size = new Size(664, 424);
+            dgvArchive.TabIndex = 1;
             // 
             // Back
             // 
-            Back.Location = new Point(25, 435);
+            Back.Location = new Point(24, 452);
             Back.Name = "Back";
             Back.Size = new Size(99, 33);
-            Back.TabIndex = 1;
+            Back.TabIndex = 2;
             Back.Text = "Back";
             Back.UseVisualStyleBackColor = true;
-            Back.Click += Back_Click;
             // 
-            // Archive
+            // SupplyArchives
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.GradientInactiveCaption;
-            ClientSize = new Size(638, 480);
+            ClientSize = new Size(712, 493);
             Controls.Add(Back);
             Controls.Add(dgvArchive);
             Icon = (Icon)resources.GetObject("$this.Icon");
-            MaximumSize = new Size(656, 527);
-            MinimumSize = new Size(656, 527);
-            Name = "Archive";
-            Text = "Archives";
-            Load += Archive_Load;
+            Name = "SupplyArchives";
+            Text = "SupplyArchives";
             ((System.ComponentModel.ISupportInitialize)dgvArchive).EndInit();
             ResumeLayout(false);
         }
