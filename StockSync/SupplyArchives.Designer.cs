@@ -63,6 +63,7 @@
             Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "SupplyArchives";
             Text = "SupplyArchives";
+            Load += SupplyArchives_Load;
             ((System.ComponentModel.ISupportInitialize)dgvArchive).EndInit();
             ResumeLayout(false);
         }

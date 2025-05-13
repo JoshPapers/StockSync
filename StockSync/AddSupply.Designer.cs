@@ -42,11 +42,11 @@
             button1 = new Button();
             dtgvSupplyRecords = new DataGridView();
             cboProductName = new ComboBox();
-            lblTotalCost = new Label();
             label3 = new Label();
             btnMarkReturned = new Button();
             button2 = new Button();
             UpdateProductName = new Button();
+            lblTotalCost = new TextBox();
             ((System.ComponentModel.ISupportInitialize)dtgvSupplyRecords).BeginInit();
             SuspendLayout();
             // 
@@ -161,17 +161,6 @@
             cboProductName.TabIndex = 30;
             cboProductName.SelectedIndexChanged += cboProductName_SelectedIndexChanged;
             // 
-            // lblTotalCost
-            // 
-            lblTotalCost.AutoSize = true;
-            lblTotalCost.BackColor = Color.White;
-            lblTotalCost.BorderStyle = BorderStyle.FixedSingle;
-            lblTotalCost.Location = new Point(158, 153);
-            lblTotalCost.Name = "lblTotalCost";
-            lblTotalCost.Size = new Size(19, 22);
-            lblTotalCost.TabIndex = 31;
-            lblTotalCost.Text = "0";
-            // 
             // label3
             // 
             label3.AutoSize = true;
@@ -210,17 +199,24 @@
             UpdateProductName.UseVisualStyleBackColor = true;
             UpdateProductName.Click += UpdateProductName_Click;
             // 
+            // lblTotalCost
+            // 
+            lblTotalCost.Location = new Point(149, 151);
+            lblTotalCost.Name = "lblTotalCost";
+            lblTotalCost.Size = new Size(76, 27);
+            lblTotalCost.TabIndex = 36;
+            // 
             // AddSupply
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.GradientInactiveCaption;
             ClientSize = new Size(1012, 503);
+            Controls.Add(lblTotalCost);
             Controls.Add(UpdateProductName);
             Controls.Add(button2);
             Controls.Add(btnMarkReturned);
             Controls.Add(label3);
-            Controls.Add(lblTotalCost);
             Controls.Add(cboProductName);
             Controls.Add(dtgvSupplyRecords);
             Controls.Add(button1);
@@ -258,10 +254,10 @@
         private Button button1;
         private DataGridView dtgvSupplyRecords;
         private ComboBox cboProductName;
-        private Label lblTotalCost;
         private Label label3;
         private Button btnMarkReturned;
         private Button button2;
         private Button UpdateProductName;
+        private TextBox lblTotalCost;
     }
 }

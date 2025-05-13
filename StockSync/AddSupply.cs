@@ -23,7 +23,9 @@ namespace StockSync
             // Attach events for live total cost update
             txtQuantity.TextChanged += txtQuantity_TextChanged;
             txtRawCost.TextChanged += txtRawCost_TextChanged;
-            cboProductName.DropDownHeight = 150;
+            cboProductName.DropDownHeight = 150; 
+            lblTotalCost.ReadOnly = true;
+            lblTotalCost.TabStop = false;
         }
 
         // Populate Product ComboBox

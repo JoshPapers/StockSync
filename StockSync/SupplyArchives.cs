@@ -10,11 +10,16 @@ using System.Windows.Forms;
 
 namespace StockSync
 {
-    public partial class SupplyArchives: Form
+    public partial class SupplyArchives : Form
     {
         public SupplyArchives()
         {
             InitializeComponent();
+        }
+
+        private void SupplyArchives_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }
