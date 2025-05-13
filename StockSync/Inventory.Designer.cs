@@ -54,8 +54,10 @@
             cmbProductName = new ComboBox();
             Archive = new Button();
             pnlSidebar = new Panel();
-            lblSupplyQuantity = new Label();
+            txtRawCost = new TextBox();
+            label5 = new Label();
             label2 = new Label();
+            txtSupplyQuantity = new TextBox();
             pnlMainContent.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvInventory).BeginInit();
             pnlHeader.SuspendLayout();
@@ -187,7 +189,7 @@
             // 
             txtSellingPrice.Location = new Point(12, 139);
             txtSellingPrice.Name = "txtSellingPrice";
-            txtSellingPrice.Size = new Size(196, 27);
+            txtSellingPrice.Size = new Size(115, 27);
             txtSellingPrice.TabIndex = 2;
             // 
             // lblStock
@@ -297,7 +299,9 @@
             // pnlSidebar
             // 
             pnlSidebar.BackColor = SystemColors.ActiveCaption;
-            pnlSidebar.Controls.Add(lblSupplyQuantity);
+            pnlSidebar.Controls.Add(txtSupplyQuantity);
+            pnlSidebar.Controls.Add(txtRawCost);
+            pnlSidebar.Controls.Add(label5);
             pnlSidebar.Controls.Add(label2);
             pnlSidebar.Controls.Add(Archive);
             pnlSidebar.Controls.Add(cmbProductName);
@@ -321,17 +325,23 @@
             pnlSidebar.Name = "pnlSidebar";
             pnlSidebar.Size = new Size(250, 633);
             pnlSidebar.TabIndex = 3;
+            pnlSidebar.Paint += pnlSidebar_Paint;
             // 
-            // lblSupplyQuantity
+            // txtRawCost
             // 
-            lblSupplyQuantity.AutoSize = true;
-            lblSupplyQuantity.BackColor = Color.White;
-            lblSupplyQuantity.BorderStyle = BorderStyle.FixedSingle;
-            lblSupplyQuantity.Location = new Point(155, 195);
-            lblSupplyQuantity.Name = "lblSupplyQuantity";
-            lblSupplyQuantity.Size = new Size(19, 22);
-            lblSupplyQuantity.TabIndex = 1;
-            lblSupplyQuantity.Text = "0";
+            txtRawCost.Location = new Point(133, 139);
+            txtRawCost.Name = "txtRawCost";
+            txtRawCost.Size = new Size(75, 27);
+            txtRawCost.TabIndex = 1;
+            // 
+            // label5
+            // 
+            label5.AutoSize = true;
+            label5.Location = new Point(135, 116);
+            label5.Name = "label5";
+            label5.Size = new Size(73, 20);
+            label5.TabIndex = 17;
+            label5.Text = "Raw Cost:";
             // 
             // label2
             // 
@@ -341,6 +351,13 @@
             label2.Size = new Size(57, 20);
             label2.TabIndex = 15;
             label2.Text = "Supply:";
+            // 
+            // txtSupplyQuantity
+            // 
+            txtSupplyQuantity.Location = new Point(133, 192);
+            txtSupplyQuantity.Name = "txtSupplyQuantity";
+            txtSupplyQuantity.Size = new Size(75, 27);
+            txtSupplyQuantity.TabIndex = 1;
             // 
             // Inventory
             // 
@@ -391,7 +408,9 @@
         private ComboBox cmbProductName;
         private Button Archive;
         private Panel pnlSidebar;
-        private Label lblSupplyQuantity;
         private Label label2;
+        private Label label5;
+        private TextBox txtRawCost;
+        private TextBox txtSupplyQuantity;
     }
 }

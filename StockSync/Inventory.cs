@@ -168,27 +168,38 @@ namespace StockSync
             LoadInventory();
             LoadCategories();
             LoadProductNames();
+            UpdateTotalValues();
 
-            // Set the ComboBox properties
+
+            LoadProductNames();
             cmbProductName.DropDownStyle = ComboBoxStyle.DropDownList;
             cmbProductName.DropDownHeight = 150;
-
-            // Calculate the maximum width needed for the dropdown
-            int maxLength = 0;
-            foreach (var item in cmbProductName.Items)
+            int maxWidth = 0;
+            using (Graphics g = cmbProductName.CreateGraphics())
             {
-                int itemLength = TextRenderer.MeasureText(item.ToString(), cmbProductName.Font).Width;
-                if (itemLength > maxLength)
+                foreach (var item in cmbProductName.Items)
                 {
-                    maxLength = itemLength;
+                    if (item is DataRowView drv)
+                    {
+                        // Get the ProductName text (DisplayMember)
+                        string productName = drv[cmbProductName.DisplayMember]?.ToString() ?? string.Empty;
+                        // Measure the width of the product name
+                        int width = (int)g.MeasureString(productName, cmbProductName.Font).Width;
+                        if (width > maxWidth)
+                        {
+                            maxWidth = width;
+                        }
+                    }
                 }
             }
+            // Set the dropdown width to the width of the widest product name plus some padding
+            cmbProductName.DropDownWidth = maxWidth + 20;
+            txtRawCost.ReadOnly = true;
+            txtRawCost.TabStop = false;
+            txtSupplyQuantity.ReadOnly = true;
+            txtSupplyQuantity.TabStop = false;
 
-            // Set the DropDownWidth
-            cmbProductName.DropDownWidth = maxLength + 10; // Add some padding
-            UpdateTotalValues();
         }
-
 
         private void btnBack_Click(object sender, EventArgs e)
         {
@@ -508,6 +519,7 @@ namespace StockSync
             if (cmbProductName.SelectedValue != null && int.TryParse(cmbProductName.SelectedValue.ToString(), out int productId))
             {
                 UpdateSupplyQuantityLabel(productId);
+                DisplayRawCostAndSellingPrice(productId);
             }
         }
         private void UpdateSupplyQuantityLabel(int productId)
@@ -523,13 +535,49 @@ namespace StockSync
                     object result = cmd.ExecuteScalar();
                     if (result != null && result != DBNull.Value)
                     {
-                        lblSupplyQuantity.Text = result.ToString();
+                        txtSupplyQuantity.Text = result.ToString();
                     }
                     else
                     {
-                        lblSupplyQuantity.Text = "0";
+                        txtSupplyQuantity.Text = "0";
                     }
                 }
+            }
+        }
+
+        private void pnlSidebar_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+        private void DisplayRawCostAndSellingPrice(int productId)
+        {
+            try
+            {
+                using (SqlConnection conn = DatabaseConnect.GetConnection())
+                {
+                    string query = "SELECT RawPrice FROM Products WHERE ProductID = @ProductID";
+                    using (SqlCommand cmd = new SqlCommand(query, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@ProductID", productId);
+                        conn.Open();
+
+                        // Fetch the raw cost
+                        object result = cmd.ExecuteScalar();
+                        if (result != null)
+                        {
+                            decimal rawCost = Convert.ToDecimal(result);
+                            txtRawCost.Text = rawCost.ToString("C");  // Format as currency
+                        }
+                        else
+                        {
+                            txtRawCost.Text = "0.00";  // In case there's no raw cost
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error fetching raw cost: " + ex.Message, "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
     }
