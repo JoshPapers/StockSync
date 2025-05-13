@@ -44,6 +44,7 @@ namespace StockSync
                         adapter.Fill(dt);
                         dgvInventory.DataSource = dt;
 
+                        dgvInventory.Columns["ProductID"].HeaderText = "Product ID";
                         dgvInventory.Columns["InventoryID"].Visible = false;
                         // Set column headers
                         dgvInventory.Columns["CategoryName"].HeaderText = "Category";
@@ -116,29 +117,16 @@ namespace StockSync
 
         private void LoadProductNames()
         {
-            cmbProductName.DropDownStyle = ComboBoxStyle.DropDownList;
-            cmbProductName.DropDownHeight = 150;
-            int maxLength = 0;
-            foreach (var item in cmbProductName.Items)
-            {
-                int itemLength = TextRenderer.MeasureText(item.ToString(), cmbProductName.Font).Width;
-                if (itemLength > maxLength)
-                {
-                    maxLength = itemLength;
-                }
-            }
-            cmbProductName.DropDownWidth = maxLength + 10;
-
-            string query = "SELECT DISTINCT ProductName FROM Products";
             using (SqlConnection conn = DatabaseConnect.GetConnection())
-            using (SqlCommand cmd = new SqlCommand(query, conn))
             {
-                conn.Open();
-                SqlDataReader reader = cmd.ExecuteReader();
-                while (reader.Read())
-                {
-                    cmbProductName.Items.Add(reader["ProductName"].ToString());
-                }
+                string query = "SELECT ProductID, ProductName FROM Products";
+                SqlDataAdapter adapter = new SqlDataAdapter(query, conn);
+                DataTable dt = new DataTable();
+                adapter.Fill(dt);
+
+                cmbProductName.DisplayMember = "ProductName"; // what shows in dropdown
+                cmbProductName.ValueMember = "ProductID";     // what you use internally
+                cmbProductName.DataSource = dt;
             }
         }
 
@@ -180,12 +168,27 @@ namespace StockSync
             LoadInventory();
             LoadCategories();
             LoadProductNames();
+
+            // Set the ComboBox properties
+            cmbProductName.DropDownStyle = ComboBoxStyle.DropDownList;
+            cmbProductName.DropDownHeight = 150;
+
+            // Calculate the maximum width needed for the dropdown
+            int maxLength = 0;
+            foreach (var item in cmbProductName.Items)
+            {
+                int itemLength = TextRenderer.MeasureText(item.ToString(), cmbProductName.Font).Width;
+                if (itemLength > maxLength)
+                {
+                    maxLength = itemLength;
+                }
+            }
+
+            // Set the DropDownWidth
+            cmbProductName.DropDownWidth = maxLength + 10; // Add some padding
             UpdateTotalValues();
-
-            // Refresh Product Names after adding a product
-            cmbProductName.Leave += (s, ev) => LoadProductNames();
-
         }
+
 
         private void btnBack_Click(object sender, EventArgs e)
         {
@@ -229,7 +232,7 @@ namespace StockSync
                 }
 
 
-                string selectedProductName = cmbProductName.Text.Trim();
+                int productId = Convert.ToInt32(cmbProductName.SelectedValue);
                 int categoryID = 0;
 
                 using (SqlConnection conn = DatabaseConnect.GetConnection())
@@ -260,31 +263,7 @@ namespace StockSync
                         }
                     }
 
-                    int productId;
 
-                    // 2. Check if product already exists
-                    string checkProductQuery = "SELECT ProductID FROM Products WHERE ProductName = @ProductName";
-                    using (SqlCommand cmd = new SqlCommand(checkProductQuery, conn))
-                    {
-                        cmd.Parameters.AddWithValue("@ProductName", selectedProductName);
-                        var existingProductId = cmd.ExecuteScalar();
-
-                        if (existingProductId != null)
-                        {
-                            productId = Convert.ToInt32(existingProductId);
-                        }
-                        else
-                        {
-                            // Insert new product if it does not exist
-                            string insertProductQuery = "INSERT INTO Products (ProductName, CategoryID) OUTPUT INSERTED.ProductID VALUES (@ProductName, @CategoryID)";
-                            using (SqlCommand insertCmd = new SqlCommand(insertProductQuery, conn))
-                            {
-                                insertCmd.Parameters.AddWithValue("@ProductName", selectedProductName);
-                                insertCmd.Parameters.AddWithValue("@CategoryID", categoryID == 0 ? (object)DBNull.Value : categoryID);
-                                productId = (int)insertCmd.ExecuteScalar();
-                            }
-                        }
-                    }
 
                     // 3. Insert new inventory entry (always new since expiration date differs)
                     string insertInventoryQuery = "INSERT INTO Inventory (ProductID, Stock, ExpirationDate, SellingPrice) VALUES (@ProductID, @Stock, @ExpirationDate, @SellingPrice)";
@@ -296,8 +275,6 @@ namespace StockSync
                         cmdInsert.Parameters.AddWithValue("@ExpirationDate", NoExp.Checked ? (object)DBNull.Value : dtpExpirationDate.Value);
                         cmdInsert.ExecuteNonQuery();
                     }
-
-                    // 4. Update QuantityPurchased in Products table after adding stock to inventory
                     // 1. Kunin ang current QuantityPurchased (supply stock)
                     string checkSupplyQuery = "SELECT QuantityPurchased FROM Products WHERE ProductID = @ProductID";
                     using (SqlCommand checkCmd = new SqlCommand(checkSupplyQuery, conn))
@@ -323,6 +300,7 @@ namespace StockSync
                                 updateCmd.Parameters.AddWithValue("@QuantityAdded", quantityToAdd);
                                 updateCmd.Parameters.AddWithValue("@ProductID", productId);
                                 updateCmd.ExecuteNonQuery();
+                                //UpdateSupplyQuantityLabel(selectedProductName);
                             }
                         }
                         else
@@ -337,6 +315,8 @@ namespace StockSync
                 MessageBox.Show("Product stock added successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 LoadInventory();
                 LoadProductNames();
+                //UpdateSupplyQuantityLabel(selectedProductName);
+
             }
             catch (Exception ex)
             {
@@ -525,7 +505,32 @@ namespace StockSync
 
         private void cmbProductName_SelectedIndexChanged(object sender, EventArgs e)
         {
+            if (cmbProductName.SelectedValue != null && int.TryParse(cmbProductName.SelectedValue.ToString(), out int productId))
+            {
+                UpdateSupplyQuantityLabel(productId);
+            }
+        }
+        private void UpdateSupplyQuantityLabel(int productId)
+        {
+            using (SqlConnection conn = DatabaseConnect.GetConnection())
+            {
+                conn.Open();
+                string query = "SELECT QuantityPurchased FROM Products WHERE ProductID = @ProductID";
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@ProductID", productId);
 
+                    object result = cmd.ExecuteScalar();
+                    if (result != null && result != DBNull.Value)
+                    {
+                        lblSupplyQuantity.Text = result.ToString();
+                    }
+                    else
+                    {
+                        lblSupplyQuantity.Text = "0";
+                    }
+                }
+            }
         }
     }
 }

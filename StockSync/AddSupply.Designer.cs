@@ -46,6 +46,7 @@
             label3 = new Label();
             btnMarkReturned = new Button();
             button2 = new Button();
+            UpdateProductName = new Button();
             ((System.ComponentModel.ISupportInitialize)dtgvSupplyRecords).BeginInit();
             SuspendLayout();
             // 
@@ -199,12 +200,23 @@
             button2.Text = "Archives";
             button2.UseVisualStyleBackColor = true;
             // 
+            // UpdateProductName
+            // 
+            UpdateProductName.Location = new Point(131, 432);
+            UpdateProductName.Name = "UpdateProductName";
+            UpdateProductName.Size = new Size(94, 29);
+            UpdateProductName.TabIndex = 35;
+            UpdateProductName.Text = "Update";
+            UpdateProductName.UseVisualStyleBackColor = true;
+            UpdateProductName.Click += UpdateProductName_Click;
+            // 
             // AddSupply
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.GradientInactiveCaption;
             ClientSize = new Size(1012, 503);
+            Controls.Add(UpdateProductName);
             Controls.Add(button2);
             Controls.Add(btnMarkReturned);
             Controls.Add(label3);
@@ -250,5 +262,6 @@
         private Label label3;
         private Button btnMarkReturned;
         private Button button2;
+        private Button UpdateProductName;
     }
 }

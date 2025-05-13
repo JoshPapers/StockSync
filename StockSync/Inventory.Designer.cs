@@ -54,8 +54,8 @@
             cmbProductName = new ComboBox();
             Archive = new Button();
             pnlSidebar = new Panel();
-            label2 = new Label();
             lblSupplyQuantity = new Label();
+            label2 = new Label();
             pnlMainContent.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvInventory).BeginInit();
             pnlHeader.SuspendLayout();
@@ -276,6 +276,7 @@
             // cmbProductName
             // 
             cmbProductName.DropDownStyle = ComboBoxStyle.DropDownList;
+            cmbProductName.DropDownWidth = 250;
             cmbProductName.FormattingEnabled = true;
             cmbProductName.Location = new Point(12, 32);
             cmbProductName.Name = "cmbProductName";
@@ -321,15 +322,6 @@
             pnlSidebar.Size = new Size(250, 633);
             pnlSidebar.TabIndex = 3;
             // 
-            // label2
-            // 
-            label2.AutoSize = true;
-            label2.Location = new Point(142, 169);
-            label2.Name = "label2";
-            label2.Size = new Size(57, 20);
-            label2.TabIndex = 15;
-            label2.Text = "Supply:";
-            // 
             // lblSupplyQuantity
             // 
             lblSupplyQuantity.AutoSize = true;
@@ -340,6 +332,15 @@
             lblSupplyQuantity.Size = new Size(19, 22);
             lblSupplyQuantity.TabIndex = 1;
             lblSupplyQuantity.Text = "0";
+            // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Location = new Point(142, 169);
+            label2.Name = "label2";
+            label2.Size = new Size(57, 20);
+            label2.TabIndex = 15;
+            label2.Text = "Supply:";
             // 
             // Inventory
             // 

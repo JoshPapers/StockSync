@@ -157,7 +157,7 @@ namespace StockSync
                 }
 
                 // Refresh ComboBox to reflect the newly added product
-                PopulateProductComboBox();
+                LoadSupplyRecords();
             }
 
             ClearFields();
@@ -226,6 +226,7 @@ namespace StockSync
         private void AddSupply_Load_1(object sender, EventArgs e)
         {
             PopulateProductComboBox();
+            cboProductName.MaxDropDownItems = 10;
             LoadSupplyRecords();
         }
         private void LoadSupplyRecords()
@@ -234,6 +235,7 @@ namespace StockSync
             {
                 string query = @"
                 SELECT 
+                    ProductID,
                     ProductName,
                     QuantityPurchased AS Quantity,
                     RawPrice AS RawCost,
@@ -261,6 +263,7 @@ namespace StockSync
                 }
 
                 // Optional: Set nicer column headers
+                dtgvSupplyRecords.Columns["ProductID"].Visible = false;
                 dtgvSupplyRecords.Columns["ProductName"].HeaderText = "Product";
                 dtgvSupplyRecords.Columns["Quantity"].HeaderText = "Quantity";
                 dtgvSupplyRecords.Columns["RawCost"].HeaderText = "Raw Cost";
@@ -349,6 +352,28 @@ namespace StockSync
             {
                 MessageBox.Show("Please select a product row to mark as returned.");
             }
+        }
+
+        private void UpdateProductName_Click(object sender, EventArgs e)
+        {
+            if (dtgvSupplyRecords.SelectedRows.Count > 0) // Ensure a row is selected
+            {
+                // Get selected product details
+                DataGridViewRow row = dtgvSupplyRecords.SelectedRows[0];
+
+                int id = Convert.ToInt32(row.Cells["ProductID"].Value);
+                string name = row.Cells["ProductName"].Value?.ToString() ?? "Unknown";
+
+                // Open UpdateProductForm and pass the product details
+                UpdateProductFormSupply updateForm = new UpdateProductFormSupply(id, name);
+                updateForm.FormClosed += (s, args) => LoadSupplyRecords();
+                updateForm.ShowDialog();
+            }
+            else
+            {
+                MessageBox.Show("Please select a product to update.", "Update Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+            LoadSupplyRecords();
         }
     }
 }
