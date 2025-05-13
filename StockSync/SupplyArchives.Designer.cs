@@ -29,19 +29,19 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SupplyArchives));
-            dgvArchive = new DataGridView();
+            dgvSupplyArchives = new DataGridView();
             Back = new Button();
-            ((System.ComponentModel.ISupportInitialize)dgvArchive).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)dgvSupplyArchives).BeginInit();
             SuspendLayout();
             // 
-            // dgvArchive
+            // dgvSupplyArchives
             // 
-            dgvArchive.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvArchive.Location = new Point(24, 22);
-            dgvArchive.Name = "dgvArchive";
-            dgvArchive.RowHeadersWidth = 51;
-            dgvArchive.Size = new Size(664, 424);
-            dgvArchive.TabIndex = 1;
+            dgvSupplyArchives.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgvSupplyArchives.Location = new Point(24, 22);
+            dgvSupplyArchives.Name = "dgvSupplyArchives";
+            dgvSupplyArchives.RowHeadersWidth = 51;
+            dgvSupplyArchives.Size = new Size(664, 424);
+            dgvSupplyArchives.TabIndex = 1;
             // 
             // Back
             // 
@@ -51,6 +51,7 @@
             Back.TabIndex = 2;
             Back.Text = "Back";
             Back.UseVisualStyleBackColor = true;
+            Back.Click += Back_Click_1;
             // 
             // SupplyArchives
             // 
@@ -59,18 +60,18 @@
             BackColor = SystemColors.GradientInactiveCaption;
             ClientSize = new Size(712, 493);
             Controls.Add(Back);
-            Controls.Add(dgvArchive);
+            Controls.Add(dgvSupplyArchives);
             Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "SupplyArchives";
             Text = "SupplyArchives";
             Load += SupplyArchives_Load;
-            ((System.ComponentModel.ISupportInitialize)dgvArchive).EndInit();
+            ((System.ComponentModel.ISupportInitialize)dgvSupplyArchives).EndInit();
             ResumeLayout(false);
         }
 
         #endregion
 
-        private DataGridView dgvArchive;
+        private DataGridView dgvSupplyArchives;
         private Button Back;
     }
 }

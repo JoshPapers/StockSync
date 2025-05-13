@@ -151,6 +151,7 @@
             dtgvSupplyRecords.RowHeadersWidth = 51;
             dtgvSupplyRecords.Size = new Size(737, 447);
             dtgvSupplyRecords.TabIndex = 29;
+            dtgvSupplyRecords.CellContentClick += dtgvSupplyRecords_CellContentClick;
             // 
             // cboProductName
             // 
@@ -188,6 +189,7 @@
             button2.TabIndex = 34;
             button2.Text = "Archives";
             button2.UseVisualStyleBackColor = true;
+            button2.Click += button2_Click;
             // 
             // UpdateProductName
             // 

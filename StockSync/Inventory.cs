@@ -44,7 +44,6 @@ namespace StockSync
                         adapter.Fill(dt);
                         dgvInventory.DataSource = dt;
 
-                        dgvInventory.Columns["ProductID"].HeaderText = "Product ID";
                         dgvInventory.Columns["InventoryID"].Visible = false;
                         // Set column headers
                         dgvInventory.Columns["CategoryName"].HeaderText = "Category";

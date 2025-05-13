@@ -23,9 +23,12 @@ namespace StockSync
             // Attach events for live total cost update
             txtQuantity.TextChanged += txtQuantity_TextChanged;
             txtRawCost.TextChanged += txtRawCost_TextChanged;
-            cboProductName.DropDownHeight = 150; 
+            cboProductName.DropDownHeight = 150;
             lblTotalCost.ReadOnly = true;
             lblTotalCost.TabStop = false;
+            txtRawCost.TabStop = false;
+            txtQuantity.TabStop = false;
+            txtSupplier.TabStop = false;
         }
 
         // Populate Product ComboBox
@@ -283,7 +286,24 @@ namespace StockSync
                 dtgvSupplyRecords.ClearSelection();
                 dtgvSupplyRecords.DefaultCellStyle.SelectionBackColor = dtgvSupplyRecords.DefaultCellStyle.BackColor;
                 dtgvSupplyRecords.DefaultCellStyle.SelectionForeColor = dtgvSupplyRecords.DefaultCellStyle.ForeColor;
+                dtgvSupplyRecords.Sorted -= dtgvSupplyRecords_Sorted; // remove if already attached
+                dtgvSupplyRecords.Sorted += dtgvSupplyRecords_Sorted;
 
+            }
+        }
+        private void dtgvSupplyRecords_Sorted(object sender, EventArgs e)
+        {
+            ColorRows(); // re-apply row colors after sorting
+        }
+        private void ColorRows()
+        {
+            foreach (DataGridViewRow row in dtgvSupplyRecords.Rows)
+            {
+                if (Convert.ToInt32(row.Cells["Quantity"].Value) == 0)
+                {
+                    row.DefaultCellStyle.BackColor = Color.DarkRed;
+                    row.DefaultCellStyle.ForeColor = Color.White;
+                }
             }
         }
 
@@ -376,6 +396,17 @@ namespace StockSync
                 MessageBox.Show("Please select a product to update.", "Update Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
             LoadSupplyRecords();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            SupplyArchives archives = new SupplyArchives();
+            archives.ShowDialog();
+        }
+
+        private void dtgvSupplyRecords_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
         }
     }
 }

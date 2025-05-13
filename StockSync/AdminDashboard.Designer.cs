@@ -38,14 +38,12 @@
             btnLogout = new Button();
             btnInventory = new Button();
             pnlHeader = new Panel();
-            button5 = new Button();
             button4 = new Button();
             pnlMainContent = new Panel();
             dataGridView2 = new DataGridView();
             dgvInventory = new DataGridView();
             pnlSidebar.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)picLogo).BeginInit();
-            pnlHeader.SuspendLayout();
             pnlMainContent.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridView2).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dgvInventory).BeginInit();
@@ -54,6 +52,7 @@
             // pnlSidebar
             // 
             pnlSidebar.BackColor = SystemColors.ActiveCaption;
+            pnlSidebar.Controls.Add(button4);
             pnlSidebar.Controls.Add(button2);
             pnlSidebar.Controls.Add(button1);
             pnlSidebar.Controls.Add(picLogo);
@@ -139,30 +138,19 @@
             // pnlHeader
             // 
             pnlHeader.BackColor = SystemColors.GradientInactiveCaption;
-            pnlHeader.Controls.Add(button5);
-            pnlHeader.Controls.Add(button4);
             pnlHeader.Dock = DockStyle.Top;
             pnlHeader.Location = new Point(250, 0);
             pnlHeader.Name = "pnlHeader";
             pnlHeader.Size = new Size(982, 125);
             pnlHeader.TabIndex = 1;
             // 
-            // button5
-            // 
-            button5.Location = new Point(253, 12);
-            button5.Name = "button5";
-            button5.Size = new Size(223, 41);
-            button5.TabIndex = 13;
-            button5.Text = "Available Supplies";
-            button5.UseVisualStyleBackColor = true;
-            // 
             // button4
             // 
-            button4.Location = new Point(17, 12);
+            button4.Location = new Point(12, 249);
             button4.Name = "button4";
             button4.Size = new Size(223, 41);
             button4.TabIndex = 12;
-            button4.Text = "Add Supplies";
+            button4.Text = "Supplies";
             button4.UseVisualStyleBackColor = true;
             button4.Click += button4_Click;
             // 
@@ -210,7 +198,6 @@
             Load += Form1_Load;
             pnlSidebar.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)picLogo).EndInit();
-            pnlHeader.ResumeLayout(false);
             pnlMainContent.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)dataGridView2).EndInit();
             ((System.ComponentModel.ISupportInitialize)dgvInventory).EndInit();
@@ -231,7 +218,6 @@
         private Button button2;
         private DataGridView dataGridView2;
         private DataGridView dgvInventory;
-        private Button button5;
         private Button button4;
     }
 }
